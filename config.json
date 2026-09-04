@@ -1,0 +1,32 @@
+{
+  "excluded": [
+    "verbal warning",
+    "warning 1",
+    "warning 2",
+    "warning 3",
+    "strike 1",
+    "strike 2",
+    "strike 3",
+    "terminated",
+    "blacklist"
+  ],
+  "excluded_substrings": [
+    "warning",
+    "strike",
+    "terminated",
+    "blacklist"
+  ],
+  "excluded_ids": [
+    "1545142522882297887",
+    "1545142609998258229",
+    "1545142699227742300",
+    "1545142789438832751",
+    "1545143475580829718",
+    "1545143539430850661",
+    "1545143614445981807",
+    "1545143757282742292",
+    "1545143948643668028",
+    "1545143873506910219"
+  ],
+  "warning_emoji_regex": "⚠|❗|‼"
+}
