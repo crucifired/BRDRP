@@ -9,7 +9,7 @@ const EXCLUDED = [
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('staff-promotion')
-    .setDescription('Показать роли для повышения персонала (скрывает warning/strike/terminated/blacklist)'),
+    .setDescription('Показать роли для повышения персонала (скрывает warning/strike/terminated/blacklist и роли с префиксом ⚠️)'),
 
   async execute(interaction) {
     if (!interaction.guild) {
@@ -21,10 +21,19 @@ module.exports = {
       const roles = interaction.guild.roles.cache
         .filter(r => !r.managed && r.id !== interaction.guild.id);
 
-      // Фильтруем исключённые по имени (без учёта регистра)
+      // Фильтруем исключённые по имени (без учёта регистра) и роли, начинающиеся с ⚠ (эмодзи предупреждения)
       const filtered = roles.filter(r => {
-        const name = (r.name || '').toLowerCase().trim();
-        return !EXCLUDED.includes(name);
+        const raw = (r.name || '').trim();
+        const name = raw.toLowerCase();
+
+        // Исключаем точные совпадения по имени
+        if (EXCLUDED.includes(name)) return false;
+
+        // Исключаем роли, которые начинаются с символа предупреждения ⚠ или ⚠️ (с пробелом или без)
+        // Регулярное выражение проверяет optional leading whitespace + warning sign
+        if (/^\s*⚠/u.test(raw)) return false;
+
+        return true;
       });
 
       // Сортируем по позиции (высшая сверху)
